@@ -14,13 +14,11 @@ app.use(cors())
 app.use(morgan(('dev')))
 config({ path: "./.env" })
 const path = require('path');
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
-    });
-}
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+});
 
 app.post("/delete_appointment_from_doctor", async (req, res) => {
     const { _id } = req.body
