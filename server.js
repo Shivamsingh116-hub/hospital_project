@@ -9,18 +9,18 @@ const patientAppointDataModel = require('./models/appointment data/patientAppoin
 const addbillingModel = require('./models/Billing/billingModel.js')
 const app = express()
 app.use(express.json())
-require('dotenv').config(); 
+require('dotenv').config();
 app.use(cors())
 app.use(morgan(('dev')))
 config({ path: "./.env" })
 const path = require('path');
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client', 'build')));
+    app.use(express.static(path.join(__dirname, 'frontend', 'build')));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
     });
-  }
-  
+}
+
 app.post("/delete_appointment_from_doctor", async (req, res) => {
     const { _id } = req.body
     console.log(_id)
