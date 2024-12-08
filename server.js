@@ -14,12 +14,12 @@ app.use(cors())
 app.use(morgan(('dev')))
 config({ path: "./.env" })
 const path = require('path');
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+app.get('/helo', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+    
 });
-
 app.post("/delete_appointment_from_doctor", async (req, res) => {
     const { _id } = req.body
     console.log(_id)
@@ -201,6 +201,6 @@ app.post('/add_patient_login_data', async (req, res) => {
 
 })
 
-app.listen(process.env.PORT || 6000, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)
 })
