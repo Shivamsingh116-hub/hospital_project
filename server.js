@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 app.get('/helo', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-    
+
 });
 app.post("/delete_appointment_from_doctor", async (req, res) => {
     const { _id } = req.body
