@@ -9,28 +9,33 @@ const patientAppointDataModel = require('./models/appointment data/patientAppoin
 const addbillingModel = require('./models/Billing/billingModel.js')
 const app = express()
 app.use(express.json())
-
+require('dotenv').config(); 
 app.use(cors())
 app.use(morgan(('dev')))
 config({ path: "./.env" })
-app.get("/", (req, res) => {
-    res.send("Hello")
-})
+const path = require('path');
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
+  
 app.post("/delete_appointment_from_doctor", async (req, res) => {
-    const {_id}=req.body
+    const { _id } = req.body
     console.log(_id)
-    await patientAppointDataModel.findByIdAndDelete({_id:_id}).then((respon)=>{
+    await patientAppointDataModel.findByIdAndDelete({ _id: _id }).then((respon) => {
         console.log(respon)
-    }).catch((err)=>{
+    }).catch((err) => {
         res.json(err)
     })
 })
 app.post("/delete_appointment_from_patient", async (req, res) => {
-    const {_id}=req.body
+    const { _id } = req.body
     console.log(_id)
-    await patientAppointDataModel.findByIdAndDelete({_id:_id}).then((respon)=>{
+    await patientAppointDataModel.findByIdAndDelete({ _id: _id }).then((respon) => {
         console.log(respon)
-    }).catch((err)=>{
+    }).catch((err) => {
         res.json(err)
     })
 })
@@ -196,6 +201,7 @@ app.post('/add_patient_login_data', async (req, res) => {
 
 
 })
-app.listen(process.env.PORT, () => {
+
+app.listen(process.env.PORT || 6000, () => {
     console.log(`Server running on ${process.env.PORT}`)
 })
