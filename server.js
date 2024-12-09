@@ -15,7 +15,9 @@ app.use(morgan(('dev')))
 config({ path: "./.env" })
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../frontend/build')));
-
+app.get("/test", (req, res) => {
+    res.send("Helloo")
+})
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 
@@ -121,7 +123,6 @@ app.post("/add_patient_appointment_data", async (req, res) => {
 })
 app.post("/match_patient_login_data", async (req, res) => {
     const { username, password } = req.body
-
     await patientLoginModel.findOne({ username: username }).then((data) => {
         if (data) {
             if (data.password === password) {
