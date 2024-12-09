@@ -14,10 +14,11 @@ app.use(cors())
 app.use(morgan(('dev')))
 config({ path: "./.env" })
 const path = require('path');
-// app.use(express.static(path.join(__dirname, '../frontend/build')));
-app.get("/test", (req, res) => {
+const _dirname = path.resolve()
+app.get("/testing", (req, res) => {
     res.send("Helloo")
 })
+const port = process.env.PORT || 5000;
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 
@@ -201,7 +202,10 @@ app.post('/add_patient_login_data', async (req, res) => {
 
 
 })
-
-app.listen(process.env.PORT, () => {
-    console.log(`Server running on ${process.env.PORT}`)
+app.use(express.static(path.join(_dirname, "../frontend/build")))
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(_dirname, "../frontend", "build", "index.html"))
+})
+app.listen(port, () => {
+    console.log(`Server running on ${port}`)
 })
