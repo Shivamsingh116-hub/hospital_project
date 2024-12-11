@@ -202,9 +202,10 @@ app.post('/add_patient_login_data', async (req, res) => {
 
 
 })
-app.use(express.static(path.join(_dirname, "../frontend/build")))
+app.use(express.static(path.join(_dirname, "./frontend/build")))
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(_dirname, "../frontend", "build", "index.html"))
+    res.sendFile(path.resolve(_dirname, "./frontend", "build", "index.html"))
+    console.log(_dirname, "dirname")
 })
 app.listen(port, () => {
     console.log(`Server running on ${port}`)
